@@ -15,8 +15,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
     
-    var fontSize = Float(17.0)
-    //put property observer here to tableView.REloadData()
+    var fontSize = Float(17.0){
+    didSet{
+        movieTableView.reloadData()
+        }
+    }
     
     var userQuery = "" {
         didSet {
@@ -44,10 +47,14 @@ class ViewController: UIViewController {
 
     @IBAction func settingsBarButton(_ sender: UIBarButtonItem) {
        //Melinda Don't forget that this is segueing!!!!!!!
+        //Step 4: create an instance of the class of the object that contains the delegate
         guard let settingVC = storyboard?.instantiateViewController(identifier: "SettingsViewController") as? SettingsViewController else {
                 fatalError("Could not downcast to DetailedViewController")}
-        //this makes your Barbutton item segue MODULLY below
+        //step5: setting the delegate in your segue since this is how you are passing data
+        settingVC.delegate = self
+        //this makes your Bar button item segue MODALLY below
         navigationController?.pushViewController(settingVC, animated: true)
+        
         }
        
     }
@@ -62,6 +69,9 @@ extension ViewController: UITableViewDataSource {
         guard let cell = movieTableView.dequeueReusableCell(withIdentifier: "tableCell") as? TableViewCell else { fatalError("Could not downcast to TableViewCell")}
         cell.movieLabel.text = allMovies[indexPath.row].name
         cell.movieYearLabel.text = allMovies[indexPath.row].year.description
+        //Step6:You need to set the fontsize in the cell for row at
+        cell.movieLabel.font = UIFont(name: "Helvetica", size: CGFloat(fontSize))
+        cell.movieYearLabel.font = UIFont(name: "Helvetica", size: CGFloat(fontSize))
         return cell
         }
         
@@ -87,4 +97,11 @@ extension ViewController: UITableViewDelegate {
         
     }
 }
-
+//Step 6: Creating an extension that conforms to the delegate
+//this is where i change the font 
+extension ViewController: SettingsViewControllerDelegate {
+    func fontSizeDidChange(_ settingsViewController: SettingsViewController) {
+        fontSize = settingsViewController.fontSize
+        
+    }
+}
