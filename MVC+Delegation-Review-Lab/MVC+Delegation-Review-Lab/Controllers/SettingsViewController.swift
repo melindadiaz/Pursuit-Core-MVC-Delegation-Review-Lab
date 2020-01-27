@@ -7,6 +7,11 @@
 //
 
 import UIKit
+//TODO: finish custom delegation
+
+protocol SettingsViewControllerDelegate: AnyObject {
+    func daSetUP() //is this the correct function needed or is it something else
+}
 
 
 class SettingsViewController: UIViewController {
@@ -23,6 +28,7 @@ class SettingsViewController: UIViewController {
         stepperOutlet.value = Double(fontSize)
         //%0.f means to not have any placements
         fontSizeOutlet.text = "Font Size \(String(format: "%0.f", fontSize))"
+        //reload the tableView tableView.reloadData()
     }
     }
     

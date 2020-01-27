@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
     
+    var fontSize = Float(17.0)
+    //put property observer here to tableView.REloadData()
     
     var userQuery = "" {
         didSet {
@@ -42,7 +44,7 @@ class ViewController: UIViewController {
 
     @IBAction func settingsBarButton(_ sender: UIBarButtonItem) {
        //Melinda Don't forget that this is segueing!!!!!!!
-            guard let settingVC = storyboard?.instantiateViewController(identifier: "SettingsViewController") as? SettingsViewController else {
+        guard let settingVC = storyboard?.instantiateViewController(identifier: "SettingsViewController") as? SettingsViewController else {
                 fatalError("Could not downcast to DetailedViewController")}
         //this makes your Barbutton item segue MODULLY below
         navigationController?.pushViewController(settingVC, animated: true)

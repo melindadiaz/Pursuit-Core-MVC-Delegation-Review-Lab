@@ -1,0 +1,26 @@
+
+Custom Delegation
+
+TODO: step1: Set up font size controller delegate
+So we set a protocol and put it ABOVE the class, we should define a protocol and add the appropriate methods, properties, initializers etc the delegate is also optional so the default value is nil.
+This delegate needs to be a weak reference. so make sure you add [weak var] our tab
+step 2 create a function to change font size: declare a property that will be a weak reference to the delegate object
+
+step3: use the delegate property to update the delegate object about  necessary: whenever you broadcast that change you need to do step 3.
+whatever the delegate is you call that function( delegate?.didLongPress(self) )
+you can put delegate?.didLongPress(self) but use a didSet(property observer: it observes for changes (listens for changes)) on my fontSize that gets called regardless who changes it.
+Step4: When we are about to segue we have the instance there. Prepare for segue(or the gear). we need reference to the object we will need a notification from
+
+Step:5 like in UITableView we need to set the delegate property
+cell.delegate = self
+
+step6: we need to conform to the ItemCellDelegate protocol and implement any required methods properties or initializers
+extension MoviesVC: FontSizeControllerDelegate{
+func didChangeFontSize(_fontsizeController: fontSizeController, fontsize: CGFloat) {
+//code update the fontsize self.fontsize = fontsize
+}
+}
+
+
+Data Persistence Delegate
+https://gist.github.com/alexpaul/978c561846b0c619ba7b01b1cfb0d9e7
